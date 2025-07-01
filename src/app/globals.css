@@ -1,10 +1,42 @@
 @import "tailwindcss";
-
+@font-face {
+  font-family: "satoshi";
+  src: url("./fonts/satoshi/Satoshi-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+/* Root Variables for Colors and Fonts */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors - System Colors */
+  --primary: #48cada;
+  --secondary: #54595f;
+  --text: #2c2c2c;
+  --accent: #4763e4;
+
+  /* Colors - Custom Colors */
+  --background: #f9f9f9;
+  --footerbg: #f8f8f8;
+  --footer-text: #708099;
+  --white: #ffffff;
+  --footer-dark: #dbdbdb;
+
+  /* Font Families */
+  --font-primary: "satoshi", sans-serif;
+
+  /* Font Sizes (Base) */
+  --h1-size: 4.5rem;
+  --h2-size: 3rem;
+  --h3-size: 2.5rem;
+  --h4-size: 2rem;
+  --h5-size: 1.75rem;
+  --h6-size: 1.5rem;
+  --h7-size: 1.25rem;
+  --subheading-size: 1.125rem;
+  --p-size: 1rem;
+  --p-small-size: 0.875rem;
 }
 
+/* Theme Inline Variables */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,15 +44,170 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* Global Body Styles */
+body {
+  background: white;
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Typography Styles */
+h1 {
+  font-family: var(--font-primary);
+  font-size: var(--h1-size);
+  line-height: var(--h1-lh);
+  font-weight: 700;
+}
+h2 {
+  font-family: var(--font-primary);
+  font-size: var(--h2-size);
+  line-height: var(--h2-lh);
+  font-weight: 600;
+}
+h3 {
+  font-family: var(--font-primary);
+  font-size: var(--h3-size);
+  line-height: var(--h3-lh);
+  font-weight: 500;
+}
+h4 {
+  font-family: var(--font-primary);
+  font-size: var(--h4-size);
+  line-height: var(--h4-lh);
+  font-weight: 500;
+}
+h5 {
+  font-family: var(--font-primary);
+  font-size: var(--h5-size);
+  line-height: var(--h5-lh);
+  font-weight: 500;
+}
+h6 {
+  font-family: var(--font-primary);
+  font-size: var(--h6-size);
+  line-height: var(--h6-lh);
+  font-weight: 500;
+}
+h7 {
+  font-family: var(--font-primary);
+  font-size: var(--h7-size);
+  line-height: var(--h7-lh);
+  font-weight: 500;
+}
+p {
+  font-family: var(--font-secondary);
+  font-size: var(--p-size);
+  line-height: var(--p-lh);
+}
+sp {
+  font-family: var(--font-secondary);
+  font-size: var(--p-small-size);
+  line-height: var(--p-small-lh);
+}
+button {
+  font-family: var(--font-primary);
+  font-size: var(--p-size);
+  line-height: var(--p-lh);
+  padding: 0.5rem 1rem;
+  background-color: var(--accent);
+  color: var(--white);
+  border-radius: 50;
+}
+button:hover {
+  background-color: var(--text);
+  cursor: pointer;
+}
+a {
+  font-family: var(--font-primary);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent);
+}
+span {
+  color: var(--accent);
+}
+/*responsive width for main content*/
+main {
+  max-width: 1280px;
+  overflow: hidden;
+  align-self: center;
+}
+
+/* Responsive Typography - Tablet (max-width: 768px) */
+@media (max-width: 768px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --h1-size: clamp(3rem, 2.5385rem + 2.0513vw, 4rem);
+    --h2-size: clamp(2.4rem, 2.1231rem + 1.2308vw, 3rem);
+    --h3-size: clamp(2.1rem, 1.9154rem + 0.8205vw, 2.5rem);
+    --h4-size: clamp(1.8rem, 1.7077rem + 0.4103vw, 2rem);
+    --h5-size: clamp(1.6rem, 1.5308rem + 0.3077vw, 1.75rem);
+    --h6-size: clamp(1.4rem, 1.3538rem + 0.2051vw, 1.5rem);
+    --h7-size: clamp(1.2rem, 1.1769rem + 0.1026vw, 1.25rem);
+    --subheading-size: 1.2rem;
+    --p-size: 1rem;
+    --p-small-size: 0.875rem;
+  }
+  main {
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Responsive Typography - Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  :root {
+    --h1-size: 3rem;
+    --h2-size: 2.4rem;
+    --h3-size: 2.1rem;
+    --h4-size: 1.8rem;
+    --h5-size: 1.6rem;
+    --h6-size: 1.4rem;
+    --h7-size: 1.2rem;
+    --subheading-size: 1.2rem;
+    --p-size: 1rem;
+    --p-small-size: 0.875rem;
+  }
+  main {
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+.ml11 {
+  font-weight: 700;
+  font-size: 3.5em;
+}
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 {
+  top: 0;
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 1em;
 }
