@@ -1,7 +1,6 @@
 import { Card } from "@/components/ui/card";
 import React from "react";
 
-// Placeholder for PostFilter component
 const PostFilter = () => (
     <div className="bg-white rounded shadow p-4 mb-4">
         <h2 className="text-lg font-semibold mb-2">Post Filter</h2>
@@ -9,7 +8,6 @@ const PostFilter = () => (
     </div>
 );
 
-// Placeholder for Carousel component
 const Carousel = () => (
     <div className="bg-gray-100 rounded shadow p-4 mb-4">
         <h2 className="text-lg font-semibold mb-2">Carousel</h2>
@@ -17,12 +15,12 @@ const Carousel = () => (
     </div>
 );
 
-// Placeholder card data
 const cards = Array.from({ length: 8 }).map((_, i) => ({
     id: i,
     title: `Card ${i + 1}`,
     description: "This is a sample card description.",
 }));
+
 
 export default function Homepage() {
     return (
