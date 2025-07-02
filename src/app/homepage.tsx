@@ -1,3 +1,4 @@
+import { Card } from "@/components/ui/card";
 import React from "react";
 
 // Placeholder for PostFilter component
@@ -36,15 +37,8 @@ export default function Homepage() {
                 <main className="md:col-span-3">
                     <Carousel />
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {cards.map((card) => (
-                            <div
-                                key={card.id}
-                                className="bg-white rounded shadow p-6 flex flex-col"
-                            >
-                                <h3 className="text-xl font-bold mb-2">{card.title}</h3>
-                                <p className="text-gray-600">{card.description}</p>
-                            </div>
-                        ))}
+                        
+                        <Card/>
                     </div>
                 </main>
             </div>
