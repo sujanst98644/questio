@@ -45,12 +45,12 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
+  --sidebar: oklch(100% 0.00011 271.152); /* sidebar background */
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-accent: #f6f8f9;
+  --sidebar-accent-foreground: #dbe4e9;
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
@@ -158,14 +158,10 @@ sp {
 button {
   font-family: var(--font-primary);
   font-size: var(--p-size);
-  line-height: var(--p-lh);
   padding: 0.5rem 1rem;
-  background-color: var(--accent);
-  color: var(--white);
   border-radius: 50;
 }
 button:hover {
-  background-color: var(--text);
   cursor: pointer;
 }
 a {
@@ -179,6 +175,8 @@ a:hover {
 }
 span {
   color: var(--accent);
+  font-size: 14px;
+  letter-spacing: 0.1px;
 }
 /*responsive width for main content*/
 main {

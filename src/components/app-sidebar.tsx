@@ -45,7 +45,7 @@ export function AppSidebar() {
     <Sidebar className="">
       <SidebarContent>
         <SidebarGroup className="sticky top-0 z-10 min-h-[calc(100vh-64px)]">
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -53,7 +53,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className="font-semibold">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
