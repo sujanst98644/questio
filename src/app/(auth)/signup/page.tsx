@@ -18,6 +18,8 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";  
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 const signupSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -47,16 +49,48 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 
 export default function SignupPage() {
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
   });
 
   const onSubmit = async (data: SignupFormValues) => {
-    setLoading(true);
-    console.log("Submitted data:", data);
+  setLoading(true);
+
+  const { name, email, password, course, semester } = data;
+
+  const { data: authData, error: authError } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (authError || !authData.user) {
+    console.error("Signup error:", authError?.message);
     setLoading(false);
-  };
+    return;
+  }
+
+  const userId = authData.user.id;
+
+  const { error: insertError } = await supabase.from("users").insert([
+    {
+      id: userId,
+      name,
+      course,
+      semester,
+    },
+  ]);
+
+  if (insertError) {
+    console.error("Error inserting into users table:", insertError.message);
+    setLoading(false);
+    return;
+  }
+  router.push("/");
+  setLoading(false);
+};
+
 
   const courses = ["BSc. CSIT", "BIT", "Law"];
   const semesters = Array.from({ length: 8 }, (_, i) => `Semester ${i + 1}`);
