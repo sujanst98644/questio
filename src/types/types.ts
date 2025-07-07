@@ -15,3 +15,13 @@ export type Post = {
   user_id: string;
   users?: User; // This comes from Supabase relation
 };
+
+
+
+export type CreatePost = {
+  title: string;
+  description: string;
+  course: string;
+  semester: number;
+  subject: string;
+};
