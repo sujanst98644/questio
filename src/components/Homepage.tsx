@@ -12,17 +12,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import PostCard from "./post/PostCard";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
-const posts = Array.from({ length: 10 }).map((_, i) => ({
-  id: i,
-  title: `What's your opinion on topic ${i + 1}?`,
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tristique, justo at fermentum varius, velit lorem suscipit ex, sit amet tincidunt elit est et justo.",
-  author: `user${i + 1}`,
-  time: `${i + 1} hours ago`,
-}));
+const sampleQuestions = [
+  {
+    id: "1",
+    title: "What is the role of physics in computing?",
+    description:
+      "Let’s discuss how fundamental physics supports computing. **Markdown** works here.",
+    subject: "Physics",
+    semester: 1,
+    course: "CSIT",
+    created_at: "2025-07-07T10:00:00Z",
+    user_id: "e0e15cfe-2d3b-49bf-bc1c-5180295ae01d",
+    users: {
+      full_name: "Sudarshan Pokhrel",
+    },
+  },
+  {
+    id: "2",
+    title: "Why is Discrete Mathematics important for CS?",
+    description:
+      "Explain the significance of sets, logic, and relations in computing.",
+    subject: "Discrete Mathematics",
+    semester: 2,
+    course: "CSIT",
+    created_at: "2025-07-06T08:30:00Z",
+    user_id: "e0e15cfe-2d3b-49bf-bc1c-5180295ae01d",
+    users: {
+      full_name: "Sudarshan Pokhrel",
+    },
+  },
+];
 
 export default function Homepage() {
   const [showStatusBar, setShowStatusBar] = React.useState<Checked>(true);
@@ -58,25 +81,23 @@ export default function Homepage() {
               <DropdownMenuCheckboxItem
                 checked={showPanel}
                 onCheckedChange={setShowPanel}
-              >
-                
-              </DropdownMenuCheckboxItem>
+              ></DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        {posts.map((post) => (
-          <div key={post.id}>
-            <div className=" my-1 p-5 space-y-2 hover:bg-gray-100 transition-colors rounded-lg">
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Posted by /{post.author}</span>
-                <span>{post.time}</span>
-              </div>
-              <h6 className="font-bold">{post.title}</h6>
-              <span className="text-muted-foreground">{post.description}</span>
-            </div>
-
-            <div className="w-full bg-gray-300 h-[1px]"></div>
-          </div>
+        {sampleQuestions.map((q) => (
+          <PostCard
+            key={q.id}
+            id={q.id}
+            title={q.title}
+            description={q.description}
+            subject={q.subject}
+            semester={q.semester}
+            course={q.course}
+            createdAt={q.created_at}
+            user_id={q.user_id}
+            authorName={q.users.full_name}
+          />
         ))}
       </div>
       <div className=" flex flex-col justify-between right-0 rounded-lg w-[30%] ">
