@@ -8,20 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-import { useRouter } from "next/navigation";
-
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
+import { login } from "@/actions/auth";
+import { LoginFormValues, loginSchema } from "@/schemas/authSchemas";
 
 export default function LoginPage() {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -32,21 +24,18 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
+    setError(null);
     setLoading(true);
-    const { email, password } = data;
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setError(error.message);
+    try {
+      const result = await login(data);
+      if (result?.error) {
+        setError(result.error);
+      }
+      // Login will redirect on success
+    } catch {
+      setError("An unexpected error occurred");
+    } finally {
       setLoading(false);
-    } else {
-      setError(null);
-      setLoading(false);
-      router.push("/"); // Redirect to dashboard or home page after successful login
     }
   };
 

@@ -2,14 +2,12 @@
 
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { signUp } from "@/actions/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
-
 import {
   Form,
   FormField,
@@ -17,80 +15,29 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form";  
-import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+} from "@/components/ui/form";
 
-const signupSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  course: z.enum(["BSc. CSIT", "BIT", "Law"], {
-    errorMap: () => ({ message: "Select a course" }),
-  }),
-  semester: z.enum(
-    [
-      "Semester 1",
-      "Semester 2",
-      "Semester 3",
-      "Semester 4",
-      "Semester 5",
-      "Semester 6",
-      "Semester 7",
-      "Semester 8",
-    ],
-    {
-      errorMap: () => ({ message: "Select a semester" }),
-    }
-  ),
-});
-
-type SignupFormValues = z.infer<typeof signupSchema>;
+import type { z } from "zod";
+import { SignupFormValues, signupSchema } from "@/schemas/authSchemas";
 
 export default function SignupPage() {
+  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
   });
 
   const onSubmit = async (data: SignupFormValues) => {
-  setLoading(true);
-
-  const { name, email, password, course, semester } = data;
-
-  const { data: authData, error: authError } = await supabase.auth.signUp({
-    email,
-    password,
-  });
-
-  if (authError || !authData.user) {
-    console.error("Signup error:", authError?.message);
-    setLoading(false);
-    return;
-  }
-
-  const userId = authData.user.id;
-
-  const { error: insertError } = await supabase.from("users").insert([
-    {
-      id: userId,
-      name,
-      course,
-      semester,
-    },
-  ]);
-
-  if (insertError) {
-    console.error("Error inserting into users table:", insertError.message);
-    setLoading(false);
-    return;
-  }
-  router.push("/");
-  setLoading(false);
-};
-
+    setError(null);
+    setLoading(true);
+    const result = await signUp(data);
+    if (result?.error) {
+      setError(result.error);
+      setLoading(false);
+    }
+    // Else, redirect handled in action
+  };
 
   const courses = ["BSc. CSIT", "BIT", "Law"];
   const semesters = Array.from({ length: 8 }, (_, i) => `Semester ${i + 1}`);
@@ -100,7 +47,9 @@ export default function SignupPage() {
       <Card className="p-8 space-y-2 rounded-2xl w-full max-w-md">
         <div className="text-center space-y-1">
           <h3>Create an account</h3>
-          <p className="text-sm text-muted-foreground">Join the community and start posting</p>
+          <p className="text-sm text-muted-foreground">
+            Join the community and start posting
+          </p>
         </div>
 
         <Form {...form}>
@@ -195,7 +144,13 @@ export default function SignupPage() {
               )}
             />
 
-            <Button type="submit" className="w-full bg-black hover:bg-gray-800" disabled={loading}>
+            {error && <p className="text-sm text-red-500">{error}</p>}
+
+            <Button
+              type="submit"
+              className="w-full bg-black hover:bg-gray-800"
+              disabled={loading}
+            >
               {loading ? "Signing up..." : "Sign Up"}
             </Button>
           </form>
