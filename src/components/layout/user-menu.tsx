@@ -10,19 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { logout } from "@/actions/auth";
 import { useTransition } from "react";
+import Link from "next/link";
 
-interface UserMenuProps {
-  user: {
-    email?: string;
-  };
-  userData?: {
-    username: string;
-    course: string;
-    semester: string;
-  };
-}
-
-export function UserMenu({ user, userData }: UserMenuProps) {
+export function UserMenu() {
   const [isPending, startTransition] = useTransition();
 
   const handleLogout = () => {
@@ -40,15 +30,20 @@ export function UserMenu({ user, userData }: UserMenuProps) {
           disabled={isPending}
         >
           <User className="w-4 h-4 mr-2" />
-          {userData?.username || user.email}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>
-          <User className="w-4 h-4 mr-2" />
-          Profile
+          <Link href={"/profile"} className="flex">
+            <User className="w-4 h-4 mr-2" />
+            Profile
+          </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLogout} disabled={isPending} className="text-red-600">
+        <DropdownMenuItem
+          onClick={handleLogout}
+          disabled={isPending}
+          className="text-red-600"
+        >
           <LogOut className="w-4 h-4 mr-2 text-red-600 " />
           {isPending ? "Logging out..." : "Logout"}
         </DropdownMenuItem>

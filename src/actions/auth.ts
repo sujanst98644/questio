@@ -60,8 +60,8 @@ export async function getCurrentUser() {
     error,
   } = await supabase.auth.getUser();
 
-  if (error || !user) {
-    return { user: null, userData: null };
+  if (!user || error) {
+    throw new Error("Not Authenticated!");
   }
 
   const { data: userData, error: userError } = await supabase
@@ -71,10 +71,10 @@ export async function getCurrentUser() {
     .single();
 
   if (userError) {
-    return { user, userData: null };
+    throw new Error("Error: Getting User");
   }
 
-  return { user, userData };
+  return { ...userData, email: user.email };
 }
 
 export async function logout() {
