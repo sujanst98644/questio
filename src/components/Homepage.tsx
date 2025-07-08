@@ -65,7 +65,7 @@ export default function Homepage({ posts }: HomepageProps) {
             course={post.course}
             createdAt={post.created_at}
             user_id={post.user_id}
-            authorName={post.users?.name}
+            authorName={post.users?.username}
           />
         ))}
       </div>

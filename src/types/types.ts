@@ -1,7 +1,7 @@
 // types.ts or inside your component file
 
 export type User = {
-  name: string;
+  username: string;
 };
 
 export type Post = {

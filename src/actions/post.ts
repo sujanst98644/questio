@@ -10,7 +10,7 @@ export const getPosts = async (): Promise<Post[]> => {
 
   const { data, error } = await supabase
     .from("questions")
-    .select("*, users(name)")
+    .select("*, users(username)")
     .order("created_at", { ascending: false });
 
   if (error) {

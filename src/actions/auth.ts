@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 
 export const signUp = async (data: SignupFormValues) => {
-  const { name, email, password, course, semester } = data;
+  const { username, email, password, course, semester } = data;
 
   const supabase = await createClient();
 
@@ -24,7 +24,7 @@ export const signUp = async (data: SignupFormValues) => {
   const { error: insertError } = await supabase.from("users").insert([
     {
       id: userId,
-      name,
+      username,
       course,
       semester,
     },

@@ -17,7 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import type { z } from "zod";
 import { SignupFormValues, signupSchema } from "@/schemas/authSchemas";
 
 export default function SignupPage() {
@@ -36,10 +35,9 @@ export default function SignupPage() {
       setError(result.error);
       setLoading(false);
     }
-    // Else, redirect handled in action
   };
 
-  const courses = ["BSc. CSIT", "BIT", "Law"];
+  const courses = ["CSIT", "BIT", "Law"];
   const semesters = Array.from({ length: 8 }, (_, i) => `Semester ${i + 1}`);
 
   return (
@@ -56,7 +54,7 @@ export default function SignupPage() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="name"
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
