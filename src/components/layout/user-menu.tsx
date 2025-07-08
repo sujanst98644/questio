@@ -14,13 +14,15 @@ import { useTransition } from "react";
 interface UserMenuProps {
   user: {
     email?: string;
-    user_metadata?: {
-      name?: string;
-    };
+  };
+  userData?: {
+    username: string;
+    course: string;
+    semester: string;
   };
 }
 
-export function UserMenu({ user }: UserMenuProps) {
+export function UserMenu({ user, userData }: UserMenuProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleLogout = () => {
@@ -32,9 +34,13 @@ export function UserMenu({ user }: UserMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="rounded-full px-4 py-2" disabled={isPending}>
+        <Button
+          variant="outline"
+          className="rounded-full px-4 py-2"
+          disabled={isPending}
+        >
           <User className="w-4 h-4 mr-2" />
-          {user.user_metadata?.name || user.email}
+          {userData?.username || user.email}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -42,8 +48,8 @@ export function UserMenu({ user }: UserMenuProps) {
           <User className="w-4 h-4 mr-2" />
           Profile
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={handleLogout} disabled={isPending}>
-          <LogOut className="w-4 h-4 mr-2" />
+        <DropdownMenuItem onClick={handleLogout} disabled={isPending} className="text-red-600">
+          <LogOut className="w-4 h-4 mr-2 text-red-600 " />
           {isPending ? "Logging out..." : "Logout"}
         </DropdownMenuItem>
       </DropdownMenuContent>

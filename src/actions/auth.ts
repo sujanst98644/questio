@@ -1,9 +1,8 @@
-"use server"
+"use server";
 import { createClient } from "@/lib/supabase/server";
 import { LoginFormValues, SignupFormValues } from "@/schemas/authSchemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
 
 export const signUp = async (data: SignupFormValues) => {
   const { username, email, password, course, semester } = data;
@@ -51,6 +50,31 @@ export async function login(formData: LoginFormValues) {
 
   revalidatePath("/");
   redirect("/");
+}
+
+export async function getCurrentUser() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    return { user: null, userData: null };
+  }
+
+  const { data: userData, error: userError } = await supabase
+    .from("users")
+    .select("username, course, semester")
+    .eq("id", user.id)
+    .single();
+
+  if (userError) {
+    return { user, userData: null };
+  }
+
+  return { user, userData };
 }
 
 export async function logout() {

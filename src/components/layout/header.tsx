@@ -3,12 +3,11 @@ import React from "react";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { UserMenu } from "./user-menu";
+import { getCurrentUser } from "@/actions/auth";
 
 const Header = async () => {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  
+  const {user, userData} = await getCurrentUser();
 
   return (
     <header className="w-full bg-white px-5 py-2 flex flex-col items-center sticky top-0 border-b border-gray-400">
@@ -34,12 +33,12 @@ const Header = async () => {
             </Link>
 
             {user ? (
-              <UserMenu user={user} />
+              <UserMenu user={user} userData={userData || undefined} />
             ) : (
               <Link href="/login">
-                <button className="border px-4 py-2 rounded-full bg-[#D93900] text-white font-semibold">
-                  Login
-                </button>
+              <button className="border px-4 py-2 rounded-full bg-[#D93900] text-white font-semibold">
+                Login
+              </button>
               </Link>
             )}
           </div>
