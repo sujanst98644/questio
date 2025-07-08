@@ -9,7 +9,6 @@ type Props = {
   semester: string | number;
   course: string;
   createdAt?: string;
-  user_id: string;
   authorName?: string; // optional, from joined user table
 };
 
@@ -21,7 +20,6 @@ const PostCard = ({
   course,
   semester,
   createdAt,
-  user_id,
   authorName = "Unknown",
 }: Props) => {
   const formattedDate = createdAt
