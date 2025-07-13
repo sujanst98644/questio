@@ -26,10 +26,10 @@ export function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="rounded-full px-4 py-2"
+          className="rounded-full px-2 py-2 outline"
           disabled={isPending}
         >
-          <User className="w-4 h-4 mr-2" />
+          <User />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

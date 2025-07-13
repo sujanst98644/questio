@@ -1,5 +1,6 @@
 import { PlusIcon, SearchIcon } from "lucide-react";
 import React from "react";
+import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { UserMenu } from "./user-menu";
@@ -15,7 +16,9 @@ const Header = async () => {
     <header className="w-full bg-white px-5 py-2 flex flex-col items-center sticky top-0 border-b border-gray-400">
       <main className="w-full flex items-center justify-between">
         <div className="flex items-center w-[30%]">
-          <span className="text-xl font-bold text-blue-600">Questio</span>
+          <Link className="" href="/">
+          <div className="satoshi font-bold text-2xl">Questio</div>
+          </Link>
         </div>
 
         <div className="flex-1 flex justify-between px-4 w-[70%]">
@@ -29,18 +32,20 @@ const Header = async () => {
           </div>
           <div className="flex items-center space-x-4">
             <Link href={"/post/new"}>
-              <button className="hover:bg-slate-200 text-black px-4 py-2 rounded-full transition font-semibold flex flex-row gap-1 tracking-wide">
-                <PlusIcon /> Post
-              </button>
+              <div className="hover:bg-slate-200 text-black px-4 py-2 rounded-full transition font-medium flex flex-row gap-1">
+                <PlusIcon className="stroke-1"/> Post
+              </div>
             </Link>
 
-            {data.user ? (
-              <UserMenu />
+            {data.user ? (<Link href="/profile">
+            <UserMenu />
+            </Link>
+              
             ) : (
               <Link href="/login">
-                <button className="border px-4 py-2 rounded-full bg-[#D93900] text-white font-semibold">
+                <Button variant="destructive">
                   Login
-                </button>
+                </Button>
               </Link>
             )}
           </div>

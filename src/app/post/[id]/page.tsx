@@ -1,7 +1,8 @@
-import PostCard from "@/components/post/PostCard";
+import PostCard from "@/components/post/postcard";
 import { getAnswers, getPost } from "@/actions/post";
 import AnswerList from "@/components/post/AnswerList";
 import AnswerForm from "@/components/post/AnswerForm";
+import SinglePost from "@/components/post/SinglePost";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -13,8 +14,9 @@ export default async function PostDetail({ params }: Props) {
   const answers = await getAnswers(id);
 
   return (
-    <div className="max-w-3xl mx-auto p-4 space-y-6">
-      <PostCard
+    <div className="min-h-screen py-10 w-full">
+      <div className="w-[70%] px-20 space-y-[20px]">
+        <SinglePost
         id={post.id}
         title={post.title}
         description={post.description}
@@ -23,11 +25,14 @@ export default async function PostDetail({ params }: Props) {
         course={post.course}
         createdAt={post.created_at}
         authorName={post.users?.username || "Anonymous"}
+        imageUrl={post.image_url}
       />
 
       <AnswerForm questionId={post.id} />
 
       <AnswerList comments={answers || []} />
+      </div>
+      
     </div>
   );
 }

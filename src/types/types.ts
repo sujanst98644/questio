@@ -13,7 +13,9 @@ export type Post = {
   course: string;
   created_at?: string;
   user_id: string;
-  users?: User; // This comes from Supabase relation
+  image_url?: string; // added this if it exists in your Supabase DB
+  users?: User; 
+  // This comes from Supabase relation
 };
 
 
@@ -24,4 +26,5 @@ export type CreatePost = {
   course: string;
   semester: number;
   subject: string;
+  imageUrl?: string; // added this line
 };

@@ -159,7 +159,7 @@ button {
   font-family: var(--font-primary);
   font-size: var(--p-size);
   padding: 0.5rem 1rem;
-  border-radius: 50;
+  border-radius: 50px;
 }
 button:hover {
   cursor: pointer;

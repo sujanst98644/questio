@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import PostCard from "./post/PostCard";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { Post } from "@/types/types";
+import PostCard from "./post/postcard";
 
 interface HomepageProps {
   posts: Post[];
@@ -64,8 +64,8 @@ export default function Homepage({ posts }: HomepageProps) {
             semester={post.semester}
             course={post.course}
             createdAt={post.created_at}
-            user_id={post.user_id}
             authorName={post.users?.username}
+            imageUrl={post.image_url}
           />
         ))}
       </div>

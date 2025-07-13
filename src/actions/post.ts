@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { CreatePost, Post } from "@/types/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import ImageKit from "imagekit";
 
 export const getPosts = async (): Promise<Post[]> => {
   const supabase = await createClient();
@@ -37,6 +38,7 @@ export const createPost = async (data: CreatePost) => {
     course: data.course,
     semester: data.semester,
     subject: data.subject,
+    image_url: data.imageUrl || null,
   });
   if (error) {
     throw new Error("Failed to create question: " + error.message);
@@ -97,3 +99,28 @@ export const createAnswer = async (postId: string, content: string) => {
 
   revalidatePath(`/post/${postId}`);
 };
+
+
+const imagekit = new ImageKit({
+  publicKey: process.env.imagekit_public_key!,
+  privateKey: process.env.imagekit_private_key!,
+  urlEndpoint: process.env.URL_endpoint!,
+});
+
+interface UploadResult {
+  url?: string;
+  error?: string;
+}
+
+export async function postImage(file: Buffer | string, fileName: string): Promise<UploadResult> {
+  try {
+    const result: { url: string } = await imagekit.upload({
+      file,
+      fileName,
+    });
+
+    return { url: result.url };
+  } catch (err) {
+    return { error: "Upload failed" };
+  }
+}
