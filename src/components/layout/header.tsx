@@ -13,7 +13,7 @@ const Header = async () => {
   const { data } = await supabase.auth.getUser();
 
   return (
-    <header className="w-full bg-white px-5 py-2 flex flex-col items-center sticky top-0 border-b border-gray-400">
+    <header className="w-full bg-background px-5 py-2 flex flex-col items-center sticky top-0 border-b border-gray-400 z-30">
       <main className="w-full flex items-center justify-between">
         <div className="flex items-center w-[30%]">
           <Link className="" href="/">

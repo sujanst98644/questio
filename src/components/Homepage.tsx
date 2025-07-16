@@ -24,7 +24,7 @@ export default function Homepage({ posts }: HomepageProps) {
 
   return (
     <div className="min-h-screen sm:px-6 py-4 flex flex-row max-w-[98%] ">
-      <div className="w-[70%] px-20">
+      <div className="w-[70%] px-15">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex border rounded-full">
